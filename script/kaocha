@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# kaocha
+# run kaocha test runner
+
+set -o errexit
+set -o nounset
+set -o pipefail
+IFS=$'\n\t'
+if [[ "${TRACE-0}" == "1" ]]; then
+  set -o xtrace
+fi
+cd "$(dirname "$0")/.."
+
+[[ -f "config.env" ]] && . "config.env"  # supply env vars
+
+clojure -A:test -M -m kaocha.runner "$@"

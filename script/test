@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# test
+# run all linters and tests
+
+set -o errexit
+set -o nounset
+set -o pipefail
+IFS=$'\n\t'
+if [[ "${TRACE-0}" == "1" ]]; then
+  set -o xtrace
+fi
+cd "$(dirname "$0")/.."
+
+clj-kondo --lint src test
+clojure -Sdeps '{:deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}}' -M -m cljfmt.main check
+script/kaocha
