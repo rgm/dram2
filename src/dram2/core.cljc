@@ -25,3 +25,21 @@
 (defn unit [q] (second q))
 
 (defn split [q] [(mag q) (unit q)])
+
+;;
+;; arithmetic
+;;
+
+(defn commensurable? [a b]
+  (and (= (reg a) (reg b))
+       (= (unit a) (unit b))))
+
+(defn check-commensurable! [a b]
+  (when-not (commensurable? a b)
+    (throw (ex-info "quantities not commensurable" {::quantities [a b]}))))
+
+(defn q+ [a b]
+  (check-commensurable! a b)
+  (let [[m1 u] (split a)
+        m2 (mag b)]
+    (make-quantity (reg a) (+ m1 m2) u)))

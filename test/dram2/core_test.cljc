@@ -17,3 +17,12 @@
       (is (= "m**2" u))
       (is (= 12 (qty/mag q)))
       (is (= "m**2" (qty/unit q))))))
+
+(deftest addition-test
+  (testing "addition on identical units"
+    (let [a (Q_ 12 "ft")
+          b (Q_ 44 "ft")
+          expected (Q_ (+ 12 44) "ft")
+          actual (qty/q+ a b)]
+      (is (= expected actual))
+      (is (= (qty/reg actual) (qty/reg a))))))
