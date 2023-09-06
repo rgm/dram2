@@ -4,10 +4,11 @@
    [dram2.core :as qty :refer [Q_]]))
 
 (deftest base-test
-  (testing "specs"
+  (testing "specs, registry meta"
     (let [q (Q_ 100 "GJ/year")]
       (is (qty/valid? q))
-      (is (= {::qty/qty true} (meta q)))))
+      (is (qty/quantity? q))
+      (is (not (nil? (qty/reg q))))))
 
   (testing "accessors"
     (let [q (Q_ 12 "m**2")
