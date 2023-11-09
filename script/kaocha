@@ -14,4 +14,4 @@ cd "$(dirname "$0")/.."
 
 [[ -f "config.env" ]] && . "config.env"  # supply env vars
 
-clojure -A:test -M -m kaocha.runner "$@"
+clojure -A:log:test -M -m kaocha.runner "$@"
