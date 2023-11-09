@@ -105,6 +105,7 @@
 (defn make-registry [s]
   (let [definitions (-> s parse-registry transform-registry)
         *conn (d/create-conn schema)]
+    (tap> definitions)
     (d/transact *conn definitions)
     (map->Registry {:*conn *conn})))
 
