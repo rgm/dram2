@@ -1,0 +1,13 @@
+reg     := line+
+<line>  := <ws>* (defn | <comment> | <ignore>) <nl>
+defn    := lhs rhs+ <comment>?
+lhs     := token
+rhs     := <ws>* <eq> <ws>* token (<ws>* token)*
+<token> := #"[\w-\p{L}\.\*_\[\];:\d°/]+" | #"\[\s*\]"
+comment := "#" #".*"
+eq      := "="
+ws      := #"\s"
+nl      := "\n"
+
+(* pint stuff we're not ready for yet, eg @import, @group *)
+ignore  = ws? "@" #".*"
