@@ -3,7 +3,7 @@ reg     := line+
 defn    := lhs rhs+ <comment>?
 lhs     := token
 rhs     := <ws>* <eq> <ws>* token (<ws>* token)*
-<token> := #"[\w-\p{L}\.\*_\[\];:\d°/]+" | #"\[\s*\]"
+<token> := #"[\w-\+\p{L}\.\*_\[\];:\d°/]+" | #"\[\s*\]"
 comment := "#" #".*"
 eq      := "="
 ws      := #"\s"

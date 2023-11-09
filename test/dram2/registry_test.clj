@@ -119,7 +119,13 @@
           expected [:reg
                     [:defn
                      [:lhs "degree_Fahrenheit"]
-                     [:rhs "5" "/" "9" "*" "kelvin;" "offset:" "233.15"]]]]
+                     [:rhs
+                      "5" "/" "9" "*" "kelvin;" "offset:" "233.15"
+                      "+" "200" "/" "9"]
+                     [:rhs "°F"]
+                     [:rhs "fahrenheit"]
+                     [:rhs "degF"]
+                     [:rhs "degreeF"]]]]
       (is (= expected actual))))
 
   (testing "formula relation w unicode"
@@ -154,7 +160,9 @@ kibi- = 2**10
   (let [default-reg-text sut/short-registry-text
         parse-tree (sut/parse-registry default-reg-text)]
     ;; will be a string if it fails to parse
-    (is (vector? parse-tree))))
+    (is (vector? parse-tree))
+    ;; failed parse will give partial results and stop
+    (is (= 182 (count parse-tree)))))
 
 (deftest test-xf-unit-definition
   (is (= [{:unit "m" :relation "[length]"}]

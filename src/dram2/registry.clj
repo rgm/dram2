@@ -94,7 +94,9 @@
              :lhs  (fn [s] (if (str/ends-with? s "-")
                              {:prefix s}
                              {:unit s}))
-             :rhs  identity}]
+             :rhs  (fn [& xs]
+                     ;; TODO actually parse here
+                     (if (= 1 (count xs)) (first xs) xs))}]
     (t/transform xfs xs)))
 
 (defrecord Registry [*conn])
