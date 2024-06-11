@@ -45,6 +45,22 @@
         m2 (mag b)]
     (make-quantity (reg a) (+ m1 m2) u)))
 
+(defn fmap
+  "Apply f :: mag -> mag to the magnitude of q."
+  [f q]
+  (let [mag' (tr/have number? (f (mag q)))]
+    (make-quantity (reg q) mag' (unit q))))
+
+(defn q* [a b]
+  (cond
+    (and (quantity? a) (number? b))
+    (fmap #(* % b) a)
+
+    (and (quantity? b) (number? a))
+    (fmap #(* % a) b)
+
+    :else (throw (ex-info "not-implemented" {::quantities [a b]}))))
+
 (defn qdiv [a b]
   (cond
     ;; only doing simple same-unit til registries work
@@ -52,6 +68,6 @@
     (do (check-commensurable! a b)
         (/ (mag a) (mag b)))
     (number? b)
-    (make-quantity (reg a) (/ (mag a) (tr/have (complement zero?) b)) (unit a))
+    (let [f #(/ % (tr/have (complement zero?) b))] (fmap f a))
 
     :else (throw (ex-info "not-implemented" {::quantities [a b]}))))

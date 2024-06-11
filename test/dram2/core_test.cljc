@@ -31,6 +31,34 @@
       (is (= expected actual))
       (is (= (q/reg actual) (q/reg a))))))
 
+(deftest simple-fmap-test
+  (testing "check division"
+    (let [a (Q_ 12.0 "ft")
+          expected (Q_ 6.0 "ft")
+          actual (q/fmap #(/ % 2) a)]
+      (is (= expected actual)))))
+
+(deftest simple-multiplication-test
+  (testing "multiplication of qty and scalar"
+    (let [a (Q_ 4 "m")
+          b 2.0
+          expected (Q_ 8.0 "m")
+          actual (q/q* a b)]
+      (is (= expected actual))))
+
+  (testing "multiplication of scalar and qty"
+    (let [b 2
+          a (Q_ 4 "m")
+          expected (Q_ 8.0 "m")
+          actual (q/q* a b)]
+      (is (= expected actual))
+      (is (= (q/reg actual) (q/reg a)))))
+
+  (testing "multiplication by anything else throws (for now)"
+    (let [a (Q_ (/ 1 3.28) "m/ft")
+          b (Q_ 3 "ft")]
+      (is (thrown? #? (:clj Exception :cljs js/Error) (q/q* a b))))))
+
 (deftest simple-division-test
   (testing "division on identical units gives a scalar"
     (let [a (Q_ 4 "m")
