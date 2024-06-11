@@ -1,9 +1,10 @@
 {:paths ["src" "resources"]
 
  :deps
- {datascript/datascript                          {:mvn/version "1.5.4"}          ;; graphs
+ {com.taoensso/truss                             {:mvn/version "1.11.0"}         ;; assertions
+  datascript/datascript                          {:mvn/version "1.5.4"}          ;; graphs
   instaparse/instaparse                          {:mvn/version "1.4.12"}         ;; dsl parsing
-  metosin/malli                                  {:mvn/version "0.13.0"}}        ;; specs
+  metosin/malli                                  {:mvn/version "0.13.0"}}       ;; specs
 
  :aliases
  {:dev
